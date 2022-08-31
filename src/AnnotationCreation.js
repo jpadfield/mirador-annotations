@@ -10,6 +10,7 @@ import RectangleIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CircleIcon from '@material-ui/icons/RadioButtonUnchecked';
 import PolygonIcon from '@material-ui/icons/Timeline';
 import GestureIcon from '@material-ui/icons/Gesture';
+import PinDrop from '@material-ui/icons/PinDrop';
 import ClosedPolygonIcon from '@material-ui/icons/ChangeHistory';
 import OpenPolygonIcon from '@material-ui/icons/ShowChart';
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
@@ -288,6 +289,9 @@ class AnnotationCreation extends Component {
                   </ToggleButton>
                   <ToggleButton value="freehand" aria-label="free hand polygon">
                     <GestureIcon />
+                  </ToggleButton>
+                  <ToggleButton value="point" aria-label="add a point">
+                    <PinDrop />
                   </ToggleButton>
                 </ToggleButtonGroup>
               </Paper>
