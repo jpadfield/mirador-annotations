@@ -27,6 +27,7 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
     "immutable": "^4.0.0-rc.12",
+    "jsonwebtoken": "^8.5.1",
     "material-ui-color-components": "^0.3.0",
     "paper": "^0.12.11",
     "react-color": "^2.18.1"
