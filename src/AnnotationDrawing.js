@@ -14,7 +14,6 @@ import
 import { Point } from 'paper';
 import flatten from 'lodash/flatten';
 import EditTool from './EditTool';
-import PointTool from './PointTool';
 import { mapChildren } from './utils';
 
 /** */
@@ -97,9 +96,6 @@ class AnnotationDrawing extends Component {
         break;
       case 'edit':
         ActiveTool = EditTool;
-        break;
-      case 'point':
-        ActiveTool = PointTool;
         break;
       default:
         break;

@@ -66,25 +66,18 @@ class MiradorAnnotation extends Component {
     const storageAdapter = config.annotation && config.annotation.adapter('poke');
     const offerExportDialog = config.annotation && storageAdapter instanceof LocalStorageAdapter
       && config.annotation.exportLocalStorageAnnotations;
-    const hideAddAnnotationButton = (typeof config.annotation.hideAddAnnotationButton === 'undefined') ? false : config.annotation.hideAddAnnotationButton;
-    let addButton;
-    if(!hideAddAnnotationButton){
-      addButton = <MiradorMenuButton
-      aria-label="Create new annotation"
-      onClick={windowViewType === 'single' ? this.openCreateAnnotationCompanionWindow : this.toggleSingleCanvasDialogOpen}
-      size="small"
-      >
-        <AddBoxIcon />
-      </MiradorMenuButton>;
-    } else {
-      addButton = "";
-    }
     return (
       <div>
         <TargetComponent
           {...targetProps} // eslint-disable-line react/jsx-props-no-spreading
         />
-        { addButton }
+        <MiradorMenuButton
+          aria-label="Create new annotation"
+          onClick={windowViewType === 'single' ? this.openCreateAnnotationCompanionWindow : this.toggleSingleCanvasDialogOpen}
+          size="small"
+        >
+          <AddBoxIcon />
+        </MiradorMenuButton>
         { singleCanvasDialogOpen && (
           <SingleCanvasDialog
             open={singleCanvasDialogOpen}

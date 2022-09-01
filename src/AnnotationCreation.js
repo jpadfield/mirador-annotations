@@ -10,7 +10,6 @@ import RectangleIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CircleIcon from '@material-ui/icons/RadioButtonUnchecked';
 import PolygonIcon from '@material-ui/icons/Timeline';
 import GestureIcon from '@material-ui/icons/Gesture';
-import PinDrop from '@material-ui/icons/PinDrop';
 import ClosedPolygonIcon from '@material-ui/icons/ChangeHistory';
 import OpenPolygonIcon from '@material-ui/icons/ShowChart';
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
@@ -65,26 +64,19 @@ class AnnotationCreation extends Component {
         }
       }
     }
-
-    const toolState = {
+    this.state = {
       activeTool: 'cursor',
+      annoBody: '',
       closedMode: 'closed',
+      colorPopoverOpen: false,
       currentColorType: false,
       fillColor: null,
-      strokeColor: '#00BFFF',
-      strokeWidth: 3,
-      ...(props.config.annotation.defaults || {}),
-    };
-
-    this.state = {
-      ...toolState,
-      annoBody: '',
-      colorPopoverOpen: false,
       lineWeightPopoverOpen: false,
       popoverAnchorEl: null,
       popoverLineWeightAnchorEl: null,
+      strokeColor: '#00BFFF',
+      strokeWidth: 1,
       svg: null,
-      textEditorStateBustingKey: 0,
       xywh: null,
       ...annoState,
     };
@@ -157,10 +149,10 @@ class AnnotationCreation extends Component {
   submitForm(e) {
     e.preventDefault();
     const {
-      annotation, canvases, receiveAnnotation, config,
+      annotation, canvases, closeCompanionWindow, receiveAnnotation, config,
     } = this.props;
     const {
-      annoBody, tags, xywh, svg, textEditorStateBustingKey,
+      annoBody, tags, xywh, svg,
     } = this.state;
     canvases.forEach((canvas) => {
       const storageAdapter = config.annotation.adapter(canvas.id);
@@ -183,13 +175,10 @@ class AnnotationCreation extends Component {
         });
       }
     });
-
     this.setState({
-      annoBody: '',
-      svg: null,
-      textEditorStateBustingKey: textEditorStateBustingKey + 1,
-      xywh: null,
+      activeTool: null,
     });
+    closeCompanionWindow();
   }
 
   /** */
@@ -227,7 +216,6 @@ class AnnotationCreation extends Component {
     const {
       activeTool, colorPopoverOpen, currentColorType, fillColor, popoverAnchorEl, strokeColor,
       popoverLineWeightAnchorEl, lineWeightPopoverOpen, strokeWidth, closedMode, annoBody, svg,
-      textEditorStateBustingKey,
     } = this.state;
     return (
       <CompanionWindow
@@ -289,9 +277,6 @@ class AnnotationCreation extends Component {
                   </ToggleButton>
                   <ToggleButton value="freehand" aria-label="free hand polygon">
                     <GestureIcon />
-                  </ToggleButton>
-                  <ToggleButton value="point" aria-label="add a point">
-                    <PinDrop />
                   </ToggleButton>
                 </ToggleButtonGroup>
               </Paper>
@@ -364,7 +349,6 @@ class AnnotationCreation extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextEditor
-                key={textEditorStateBustingKey}
                 annoHtml={annoBody}
                 updateAnnotationBody={this.updateBody}
               />
@@ -444,7 +428,6 @@ AnnotationCreation.propTypes = {
   config: PropTypes.shape({
     annotation: PropTypes.shape({
       adapter: PropTypes.func,
-      defaults: PropTypes.objectOf(PropTypes.string),
     }),
   }).isRequired,
   id: PropTypes.string.isRequired,
